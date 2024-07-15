@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Lizard Spock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="game-board">
+            <div class="header">
+                <img src="logo-bonus.svg" alt="Rock Paper Scissors Lizard Spock" class="logo">
+                <div class="score-board">
+                    <span>SCORE</span>
+                    <div class="score">{{ score }}</div>
+                </div>
+            </div>
+            <div v-if="!playerChoice" class="choices-pentagon">
+                <div v-for="choice in choices" :key="choice" class="choice" :class="choice" @click="makeChoice(choice)">
+                    <div class="icon">
+                        <img :src="'images/icon-' + choice + '.svg'" :alt="choice">
+                    </div>
+                </div>
+            </div>
+            <div v-else class="results">
+                <div class="player-choice">
+                    <h2>YOU PICKED</h2>
+                    <div class="choice" :class="playerChoice">
+                        <div class="icon">
+                            <img :src="'images/icon-' + playerChoice + '.svg'" :alt="playerChoice">
+                        </div>
+                    </div>
+                </div>
+                <div v-if="result" class="result">
+                    <h1>{{ result }}</h1>
+                    <button @click="playAgain" class="play-again">PLAY AGAIN</button>
+                </div>
+                <div class="house-choice">
+                    <h2>THE HOUSE PICKED</h2>
+                    <div v-if="houseChoice" class="choice" :class="houseChoice">
+                        <div class="icon">
+                            <img :src="'images/icon-' + houseChoice + '.svg'" :alt="houseChoice">
+                        </div>
+                    </div>
+                    <div v-else class="placeholder"></div>
+                </div>
+            </div>
+            <button class="rules-btn" @click="toggleRules">RULES</button>
+        </div>
+        <div class="modal" v-if="showRules">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>RULES</h2>
+                    <button class="close-btn" @click="showRules = false">&times;</button>
+                </div>
+                <img src="image-rules-bonus.svg" alt="Game Rules" class="rules-image">
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
