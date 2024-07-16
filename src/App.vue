@@ -20,26 +20,28 @@
         </div>
       </div>
       <div v-else class="results">
-        <div class="player-choice">
-          <h2>YOU PICKED</h2>
-          <div class="choice" :class="playerChoice">
-            <div class="icon">
-              <img :src="require(`@/assets/images/icon-${playerChoice}.svg`)" :alt="playerChoice">
+        <div class="choice-container">
+          <div class="player-choice">
+            <h2>YOU PICKED</h2>
+            <div class="choice" :class="playerChoice">
+              <div class="icon">
+                <img :src="require(`@/assets/images/icon-${playerChoice}.svg`)" :alt="playerChoice">
+              </div>
             </div>
           </div>
-        </div>
-        <div v-if="result" class="result">
-          <h1>{{ result }}</h1>
-          <button @click="playAgain" class="play-again">PLAY AGAIN</button>
-        </div>
-        <div class="house-choice">
-          <h2>THE HOUSE PICKED</h2>
-          <div v-if="houseChoice" class="choice" :class="houseChoice">
-            <div class="icon">
-              <img :src="require(`@/assets/images/icon-${houseChoice}.svg`)" :alt="houseChoice">
-            </div>
+          <div class="result-container">
+            <h1 v-if="result">{{ result }}</h1>
+            <button @click="playAgain" class="play-again">PLAY AGAIN</button>
           </div>
-          <div v-else class="placeholder"></div>
+          <div class="house-choice">
+            <h2>THE HOUSE PICKED</h2>
+            <div v-if="houseChoice" class="choice" :class="houseChoice">
+              <div class="icon">
+                <img :src="require(`@/assets/images/icon-${houseChoice}.svg`)" :alt="houseChoice">
+              </div>
+            </div>
+            <div v-else class="placeholder"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -217,11 +219,17 @@ body {
     box-shadow: inset 0 5px 0 rgba(255, 255, 255, 0.3);
 }
 
-.scissors { background: var(--scissors-gradient); top: 0; left: 50%; transform: translateX(-50%); }
-.paper { background: var(--paper-gradient); top: 25%; right: 0; }
-.rock { background: var(--rock-gradient); bottom: 0; right: 15%; }
-.lizard { background: var(--lizard-gradient); bottom: 0; left: 15%; }
-.spock { background: var(--spock-gradient); top: 25%; left: 0; }
+.choices-pentagon .scissors, .results .scissors { background: var(--scissors-gradient); }
+.choices-pentagon .paper, .results .paper { background: var(--paper-gradient); }
+.choices-pentagon .rock, .results .rock { background: var(--rock-gradient); }
+.choices-pentagon .lizard, .results .lizard { background: var(--lizard-gradient); }
+.choices-pentagon .spock, .results .spock { background: var(--spock-gradient); }
+
+.choices-pentagon .scissors { top: 0; left: 50%; transform: translateX(-50%); }
+.choices-pentagon .paper { top: 25%; right: 0; }
+.choices-pentagon .rock { bottom: 0; right: 15%; }
+.choices-pentagon .lizard { bottom: 0; left: 15%; }
+.choices-pentagon .spock { top: 25%; left: 0; }
 
 .icon {
     width: 80%;
@@ -319,41 +327,67 @@ body {
 
 .results {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     margin-top: 4rem;
+    width: 100%;
+}
+
+.choice-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
 }
 
 .player-choice, .house-choice {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.result {
-    text-align: center;
-    margin: 0 2rem;
+.results .choice {
+    position: static;
+    margin: 2rem 0;
+    transform: none;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
 }
 
-.result h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+.result-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 2rem;
+}
+
+.result-container h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
 .play-again {
-    background-color: #ffffff;
-    border: none;
-    color: var(--dark-text);
-    padding: 0.8rem 2.5rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Barlow Semi Condensed', sans-serif;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
+  background-color: #ffffff;
+  border: none;
+  color: var(--dark-text);
+  padding: 0.8rem 2.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Barlow Semi Condensed', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
 .play-again:hover {
-    color: hsl(349, 71%, 52%);
+  color: hsl(349, 71%, 52%);
 }
 
 .placeholder {
@@ -361,20 +395,21 @@ body {
     height: 120px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
 }
 
 @media (max-width: 768px) {
-    .results {
+    .choice-container {
         flex-direction: column;
-    }
-
-    .result {
-        order: 3;
-        margin-top: 2rem;
+        align-items: center;
     }
 
     .player-choice, .house-choice {
         margin-bottom: 2rem;
+    }
+
+    .result-container {
+        order: 3;
     }
 }
 </style>
