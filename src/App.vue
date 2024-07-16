@@ -13,31 +13,31 @@
         </div>
       </div>
       <div v-if="!playerChoice" class="choices-pentagon">
-        <div v-for="choice in choices" :key="choice" class="choice" :class="choice" @click="makeChoice(choice)">
+        <div v-for="choice in choices" :key="choice.name" class="choice" :class="choice.name" @click="makeChoice(choice)">
           <div class="icon">
-            <img :src="require(`@/assets/images/icon-${choice}.svg`)" :alt="choice">
+            <img :src="require(`@/assets/images/icon-${choice.name}.svg`)" :alt="choice.name">
           </div>
         </div>
       </div>
-      <div v-else class="results">
+      <div v-else class="results" :class="{ 'show-winner': showWinner }">
         <div class="choice-container">
           <div class="player-choice">
             <h2>YOU PICKED</h2>
-            <div class="choice" :class="playerChoice">
+            <div class="choice" :class="playerChoice.name">
               <div class="icon">
-                <img :src="require(`@/assets/images/icon-${playerChoice}.svg`)" :alt="playerChoice">
+                <img :src="require(`@/assets/images/icon-${playerChoice.name}.svg`)" :alt="playerChoice.name">
               </div>
             </div>
           </div>
-          <div class="result-container">
-            <h1 v-if="result">{{ result }}</h1>
+          <div v-if="showWinner" class="result-container">
+            <h1>{{ result }}</h1>
             <button @click="playAgain" class="play-again">PLAY AGAIN</button>
           </div>
           <div class="house-choice">
             <h2>THE HOUSE PICKED</h2>
-            <div v-if="houseChoice" class="choice" :class="houseChoice">
+            <div v-if="houseChoice" class="choice" :class="houseChoice.name">
               <div class="icon">
-                <img :src="require(`@/assets/images/icon-${houseChoice}.svg`)" :alt="houseChoice">
+                <img :src="require(`@/assets/images/icon-${houseChoice.name}.svg`)" :alt="houseChoice.name">
               </div>
             </div>
             <div v-else class="placeholder"></div>
@@ -45,8 +45,8 @@
         </div>
       </div>
     </div>
-    <button class="rules-btn" @click="toggleRules">RULES</button>
-    <div class="modal" v-if="showRules">
+    <button class="rules-btn" @click.stop="toggleRules">RULES</button>
+    <div class="modal" v-if="showRules" @click.self="toggleRules">
       <div class="modal-content">
         <div class="modal-header">
           <h2>RULES</h2>
@@ -63,12 +63,19 @@ export default {
   name: 'App',
   data() {
     return {
-      choices: ['scissors', 'paper', 'rock', 'lizard', 'spock'],
-      score: 12,
+      choices: [
+        { name: 'rock', beats: ['scissors', 'lizard'] },
+        { name: 'paper', beats: ['rock', 'spock'] },
+        { name: 'scissors', beats: ['paper', 'lizard'] },
+        { name: 'lizard', beats: ['spock', 'paper'] },
+        { name: 'spock', beats: ['scissors', 'rock'] }
+      ],
+      score: 0,
       showRules: false,
       playerChoice: null,
       houseChoice: null,
-      result: null
+      result: null,
+      showWinner: false
     };
   },
   methods: {
@@ -76,37 +83,48 @@ export default {
       this.playerChoice = choice;
       this.houseChoice = null;
       this.result = null;
+      this.showWinner = false;
       setTimeout(() => {
-        this.houseChoice = this.choices[Math.floor(Math.random() * this.choices.length)];
+        this.houseChoice = this.aiChoose();
         this.determineWinner();
       }, 1000);
     },
+    aiChoose() {
+      const randomIndex = Math.floor(Math.random() * this.choices.length);
+      return this.choices[randomIndex];
+    },
     determineWinner() {
-      const rules = {
-        rock: ['scissors', 'lizard'],
-        paper: ['rock', 'spock'],
-        scissors: ['paper', 'lizard'],
-        lizard: ['spock', 'paper'],
-        spock: ['scissors', 'rock']
-      };
-      if (this.playerChoice === this.houseChoice) {
+      if (this.playerChoice.name === this.houseChoice.name) {
         this.result = "DRAW";
-      } else if (rules[this.playerChoice].includes(this.houseChoice)) {
+      } else if (this.playerChoice.beats.includes(this.houseChoice.name)) {
         this.result = "YOU WIN";
         this.score++;
       } else {
         this.result = "YOU LOSE";
-        this.score--;
+        this.score = Math.max(0, this.score - 1);
       }
+      this.showWinner = true;
     },
-    playAgain() {
+    resetGame() {
       this.playerChoice = null;
       this.houseChoice = null;
       this.result = null;
+      this.showWinner = false;
+    },
+    playAgain() {
+      this.resetGame();
     },
     toggleRules() {
       this.showRules = !this.showRules;
     }
+  },
+  created() {
+    this.resetGame();
+  },
+  mounted() {
+    setTimeout(() => {
+      document.body.classList.remove("preload");
+    }, 500);
   }
 };
 </script>
@@ -258,6 +276,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
 }
 
 .rules-btn:hover {
@@ -351,43 +371,41 @@ body {
     position: static;
     margin: 2rem 0;
     transform: none;
-    top: auto;
-    left: auto;
-    right: auto;
-    bottom: auto;
 }
 
 .result-container {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2rem;
 }
 
 .result-container h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
 .play-again {
-  background-color: #ffffff;
-  border: none;
-  color: var(--dark-text);
-  padding: 0.8rem 2.5rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: 'Barlow Semi Condensed', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
+    background-color: #ffffff;
+    border: none;
+    color: var(--dark-text);
+    padding: 0.8rem 2.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 10;
 }
 
 .play-again:hover {
-  color: hsl(349, 71%, 52%);
+    color: hsl(349, 71%, 52%);
 }
 
 .placeholder {
