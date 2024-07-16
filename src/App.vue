@@ -430,4 +430,81 @@ body {
         order: 3;
     }
 }
+
+.results .choice {
+    position: static;
+    margin: 2rem 0;
+    transform: none;
+    width: 200px;  /* Increased size */
+    height: 200px; /* Increased size */
+}
+
+.results .icon {
+    width: 150px;  /* Adjusted for larger choice */
+    height: 150px; /* Adjusted for larger choice */
+}
+
+.results .icon img {
+    width: 60%;   /* Adjusted for larger icon */
+    height: 60%;  /* Adjusted for larger icon */
+}
+
+@keyframes ripple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1),
+                    0 0 0 20px rgba(255, 255, 255, 0.1),
+                    0 0 0 40px rgba(255, 255, 255, 0.1),
+                    0 0 0 60px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.1),
+                    0 0 0 40px rgba(255, 255, 255, 0.1),
+                    0 0 0 60px rgba(255, 255, 255, 0.1),
+                    0 0 0 80px rgba(255, 255, 255, 0);
+    }
+}
+
+.results .choice.winner {
+    animation: ripple 1.5s linear infinite;
+}
+
+.rules-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.rules-btn:hover {
+    background-color: #ffffff;
+    color: var(--dark-text);
+}
+
+@media (max-width: 768px) {
+    .results .choice {
+        width: 150px;  /* Slightly smaller on mobile */
+        height: 150px;
+    }
+
+    .results .icon {
+        width: 110px;
+        height: 110px;
+    }
+
+    .rules-btn {
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
 </style>
