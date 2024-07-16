@@ -1,3 +1,115 @@
+<template>
+  <div id="app">
+    <div class="game-board">
+      <div class="header">
+        <div class="logo-container">
+          <img src="@/assets/logo-bonus.svg" alt="Rock Paper Scissors Lizard Spock" class="logo">
+        </div>
+        <div class="score-container">
+          <div class="score-board">
+            <span>SCORE</span>
+            <div class="score">{{ score }}</div>
+          </div>
+        </div>
+      </div>
+      <div v-if="!playerChoice" class="choices-pentagon">
+        <div v-for="choice in choices" :key="choice" class="choice" :class="choice" @click="makeChoice(choice)">
+          <div class="icon">
+            <img :src="require(`@/assets/images/icon-${choice}.svg`)" :alt="choice">
+          </div>
+        </div>
+      </div>
+      <div v-else class="results">
+        <div class="player-choice">
+          <h2>YOU PICKED</h2>
+          <div class="choice" :class="playerChoice">
+            <div class="icon">
+              <img :src="require(`@/assets/images/icon-${playerChoice}.svg`)" :alt="playerChoice">
+            </div>
+          </div>
+        </div>
+        <div v-if="result" class="result">
+          <h1>{{ result }}</h1>
+          <button @click="playAgain" class="play-again">PLAY AGAIN</button>
+        </div>
+        <div class="house-choice">
+          <h2>THE HOUSE PICKED</h2>
+          <div v-if="houseChoice" class="choice" :class="houseChoice">
+            <div class="icon">
+              <img :src="require(`@/assets/images/icon-${houseChoice}.svg`)" :alt="houseChoice">
+            </div>
+          </div>
+          <div v-else class="placeholder"></div>
+        </div>
+      </div>
+    </div>
+    <button class="rules-btn" @click="toggleRules">RULES</button>
+    <div class="modal" v-if="showRules">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>RULES</h2>
+          <button class="close-btn" @click="toggleRules">&times;</button>
+        </div>
+        <img src="@/assets/image-rules-bonus.svg" alt="Game Rules" class="rules-image">
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      choices: ['scissors', 'paper', 'rock', 'lizard', 'spock'],
+      score: 12,
+      showRules: false,
+      playerChoice: null,
+      houseChoice: null,
+      result: null
+    };
+  },
+  methods: {
+    makeChoice(choice) {
+      this.playerChoice = choice;
+      this.houseChoice = null;
+      this.result = null;
+      setTimeout(() => {
+        this.houseChoice = this.choices[Math.floor(Math.random() * this.choices.length)];
+        this.determineWinner();
+      }, 1000);
+    },
+    determineWinner() {
+      const rules = {
+        rock: ['scissors', 'lizard'],
+        paper: ['rock', 'spock'],
+        scissors: ['paper', 'lizard'],
+        lizard: ['spock', 'paper'],
+        spock: ['scissors', 'rock']
+      };
+      if (this.playerChoice === this.houseChoice) {
+        this.result = "DRAW";
+      } else if (rules[this.playerChoice].includes(this.houseChoice)) {
+        this.result = "YOU WIN";
+        this.score++;
+      } else {
+        this.result = "YOU LOSE";
+        this.score--;
+      }
+    },
+    playAgain() {
+      this.playerChoice = null;
+      this.houseChoice = null;
+      this.result = null;
+    },
+    toggleRules() {
+      this.showRules = !this.showRules;
+    }
+  }
+};
+</script>
+
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&display=swap');
 
 :root {
@@ -43,10 +155,13 @@ body {
     border-radius: 15px;
     padding: 1rem 2rem;
     margin-bottom: 4rem;
+    min-width: 700px;
+    height: 150px;
 }
 
 .logo {
-    height: 100px;
+    height: 120px;
+    align-self: flex-start;
 }
 
 .score-board {
@@ -54,6 +169,7 @@ body {
     border-radius: 8px;
     padding: 1rem 2rem;
     text-align: center;
+    align-self: flex-start;
 }
 
 .score-board span {
@@ -149,7 +265,7 @@ body {
     transform: translate(-50%, -50%);
     width: 70%;
     height: 70%;
-    background-image: url('bg-pentagon.svg');
+    background-image: url('~@/assets/bg-pentagon.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -261,3 +377,4 @@ body {
         margin-bottom: 2rem;
     }
 }
+</style>
