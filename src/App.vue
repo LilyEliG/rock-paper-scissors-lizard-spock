@@ -435,18 +435,18 @@ body {
     position: static;
     margin: 2rem 0;
     transform: none;
-    width: 200px;  /* Increased size */
-    height: 200px; /* Increased size */
+    width: 220px;  /* Increased size */
+    height: 220px; /* Increased size */
 }
 
 .results .icon {
-    width: 150px;  /* Adjusted for larger choice */
-    height: 150px; /* Adjusted for larger choice */
+    width: 180px;  /* Adjusted for larger choice */
+    height: 180px; /* Adjusted for larger choice */
 }
 
 .results .icon img {
-    width: 60%;   /* Adjusted for larger icon */
-    height: 60%;  /* Adjusted for larger icon */
+    width: 70%;   /* Adjusted for larger icon */
+    height: 70%;  /* Adjusted for larger icon */
 }
 
 @keyframes ripple {
@@ -506,5 +506,129 @@ body {
         bottom: 1rem;
         right: 1rem;
     }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
+
+  .game-board {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .header {
+    min-width: auto;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 4rem;
+    border-radius: 8px;
+    height: auto;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  .score-board {
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+  }
+
+  .score {
+    font-size: 2.5rem;
+  }
+
+  .choices-pentagon {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  .choice {
+    width: 110px;
+    height: 110px;
+    position: absolute;
+  }
+
+  .choices-pentagon .scissors { top: -20px; left: 50%; transform: translateX(-50%); }
+  .choices-pentagon .paper { top: 70px; right: -20px; }
+  .choices-pentagon .rock { bottom: -20px; right: 20px; }
+  .choices-pentagon .lizard { bottom: -20px; left: 20px; }
+  .choices-pentagon .spock { top: 70px; left: -20px; }
+
+  .icon {
+    width: 85%;
+    height: 85%;
+  }
+
+  .rules-btn {
+    position: static;
+    margin-top: 3rem;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+  }
+
+  .results .choice {
+    width: 130px;
+    height: 130px;
+    margin: 1rem 0;
+  }
+
+  .results .icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .result-container h1 {
+    font-size: 2.5rem;
+  }
+
+  .play-again {
+    padding: 0.8rem 3rem;
+    font-size: 1rem;
+  }
+
+  .choice-container {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .player-choice, .house-choice {
+    margin-bottom: 2rem;
+  }
+
+  .result-container {
+    order: 3;
+    margin-top: 2rem;
+  }
+
+  .modal-content {
+    padding: 2rem;
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .modal-header {
+    margin-bottom: 2rem;
+  }
+
+  .modal-header h2 {
+    font-size: 2rem;
+  }
+
+  .close-btn {
+    font-size: 2.5rem;
+  }
 }
 </style>
