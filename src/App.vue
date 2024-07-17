@@ -29,10 +29,6 @@
               </div>
             </div>
           </div>
-          <div v-if="showWinner" class="result-container">
-            <h1>{{ result }}</h1>
-            <button @click="playAgain" class="play-again">PLAY AGAIN</button>
-          </div>
           <div class="house-choice">
             <h2>THE HOUSE PICKED</h2>
             <div v-if="houseChoice" class="choice" :class="houseChoice.name">
@@ -42,6 +38,10 @@
             </div>
             <div v-else class="placeholder"></div>
           </div>
+        </div>
+        <div v-if="showWinner" class="result-container">
+          <h1>{{ result }}</h1>
+          <button @click="playAgain" class="play-again">PLAY AGAIN</button>
         </div>
       </div>
     </div>
@@ -417,104 +417,8 @@ body {
 }
 
 @media (max-width: 768px) {
-    .choice-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .player-choice, .house-choice {
-        margin-bottom: 2rem;
-    }
-
-    .result-container {
-        order: 3;
-    }
-}
-
-.results .choice {
-    position: static;
-    margin: 2rem 0;
-    transform: none;
-    width: 220px;  /* Increased size */
-    height: 220px; /* Increased size */
-}
-
-.results .icon {
-    width: 180px;  /* Adjusted for larger choice */
-    height: 180px; /* Adjusted for larger choice */
-}
-
-.results .icon img {
-    width: 70%;   /* Adjusted for larger icon */
-    height: 70%;  /* Adjusted for larger icon */
-}
-
-@keyframes ripple {
-    0% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1),
-                    0 0 0 20px rgba(255, 255, 255, 0.1),
-                    0 0 0 40px rgba(255, 255, 255, 0.1),
-                    0 0 0 60px rgba(255, 255, 255, 0.1);
-    }
-    100% {
-        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.1),
-                    0 0 0 40px rgba(255, 255, 255, 0.1),
-                    0 0 0 60px rgba(255, 255, 255, 0.1),
-                    0 0 0 80px rgba(255, 255, 255, 0);
-    }
-}
-
-.results .choice.winner {
-    animation: ripple 1.5s linear infinite;
-}
-
-.rules-btn {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background-color: transparent;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    padding: 0.5rem 2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Barlow Semi Condensed', sans-serif;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.rules-btn:hover {
-    background-color: #ffffff;
-    color: var(--dark-text);
-}
-
-@media (max-width: 768px) {
-    .results .choice {
-        width: 150px;  /* Slightly smaller on mobile */
-        height: 150px;
-    }
-
-    .results .icon {
-        width: 110px;
-        height: 110px;
-    }
-
-    .rules-btn {
-        bottom: 1rem;
-        right: 1rem;
-    }
-}
-
-@media (max-width: 768px) {
   body {
     padding: 2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 100vh;
   }
 
   .game-board {
@@ -522,12 +426,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1;
   }
 
   .header {
     min-width: auto;
-    width: 320px;
+    width: 100%;
+    max-width: 320px;
     padding: 1rem 1.5rem;
     margin-bottom: 3rem;
     border-radius: 8px;
@@ -548,16 +452,14 @@ body {
   }
 
   .choices-pentagon {
-    position: relative;
     width: 300px;
     height: 300px;
     margin: 0 auto;
   }
 
-  .choice {
+  .choices-pentagon .choice {
     width: 110px;
     height: 110px;
-    position: absolute;
   }
 
   .choices-pentagon .scissors { top: -20px; left: 50%; transform: translateX(-50%); }
@@ -566,64 +468,26 @@ body {
   .choices-pentagon .lizard { bottom: -20px; left: 20px; }
   .choices-pentagon .spock { top: 70px; left: -20px; }
 
-  .icon {
-    width: 85%;
-    height: 85%;
-  }
-
-  .rules-btn {
-    position: absolute;
-    left: 50%;
-    bottom: 6rem; /* Moved lower */
-    transform: translateX(-50%);
-    margin-top: 0;
-    cursor: pointer;
-  }
-
-  .results .choice {
-    width: 130px;
-    height: 130px;
-    margin: 1rem 0;
-  }
-
-  .results .icon {
-    width: 100px;
-    height: 100px;
-  }
-
-  .result-container h1 {
-    font-size: 3rem;
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-  }
-
-  .play-again {
-    padding: 0.8rem 3rem;
-    font-size: 1rem;
-    margin-bottom: 2rem;
-    cursor: pointer;
-  }
-
   .results {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        height: calc(100vh - 200px); /* Adjust based on your header height */
-        padding: 2rem 1rem;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 200px);
+    padding: 2rem 1rem;
+  }
 
   .choice-container {
     display: flex;
-        flex-direction: row; /* This will place choices side by side */
-        justify-content: space-between;
-        width: 100%;
-        max-width: 300px; /* Adjust as needed */
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 300px;
   }
 
   .player-choice, .house-choice {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
   }
 
@@ -632,40 +496,45 @@ body {
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    order: 2; /* This ensures the text appears below the choice */
   }
 
   .results .choice {
-        width: 110px;
-        height: 110px;
-        margin: 0;
-        order: 1; /* This ensures the choice appears above the text */
-    }
+    width: 130px;
+    height: 130px;
+    margin: 0;
+  }
 
-    .results .icon {
-        width: 100px;
-        height: 100px;
-    }
+  .results .icon {
+    width: 100px;
+    height: 100px;
+  }
 
   .result-container {
-    order: 3;
     text-align: center;
     margin-top: 2rem;
   }
 
-  .modal {
+  .result-container h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .play-again {
+    padding: 0.8rem 3rem;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .rules-btn {
     position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+  }
+
+  .modal {
     background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 1rem;
   }
 
   .modal-content {
