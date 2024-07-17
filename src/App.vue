@@ -440,8 +440,7 @@ body {
 
     .header {
         min-width: auto;
-        width: 100%;
-        max-width: 320px;
+        width: 300px;
         padding: 1rem 1.5rem;
         margin-bottom: 3rem;
         border-radius: 8px;
@@ -486,6 +485,8 @@ body {
     }
 
     .choice-container {
+        margin-top: 7rem;
+        padding: 5px;
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
@@ -497,7 +498,8 @@ body {
     }
 
     .player-choice h2, .house-choice h2 {
-        margin-top: 1rem;
+        margin-top: 4rem;
+        margin-left: 0.5rem;
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -506,7 +508,7 @@ body {
     .results .choice {
         width: 130px;
         height: 130px;
-        margin: 0;
+        margin-top: 5rem;
     }
 
     .results .icon {
