@@ -527,9 +527,9 @@ body {
 
   .header {
     min-width: auto;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    margin-bottom: 4rem;
+    width: 320px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 3rem;
     border-radius: 8px;
     height: auto;
   }
@@ -572,10 +572,12 @@ body {
   }
 
   .rules-btn {
-    position: static;
-    margin-top: 3rem;
-    padding: 0.6rem 2rem;
-    font-size: 1rem;
+    position: absolute;
+    left: 50%;
+    bottom: 6rem; /* Moved lower */
+    transform: translateX(-50%);
+    margin-top: 0;
+    cursor: pointer;
   }
 
   .results .choice {
@@ -590,45 +592,120 @@ body {
   }
 
   .result-container h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
   }
 
   .play-again {
     padding: 0.8rem 3rem;
     font-size: 1rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
   }
 
+  .results {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: calc(100vh - 200px); /* Adjust based on your header height */
+        padding: 2rem 1rem;
+    }
+
   .choice-container {
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
+    display: flex;
+        flex-direction: row; /* This will place choices side by side */
+        justify-content: space-between;
+        width: 100%;
+        max-width: 300px; /* Adjust as needed */
   }
 
   .player-choice, .house-choice {
-    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+
+  .player-choice h2, .house-choice h2 {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    order: 2; /* This ensures the text appears below the choice */
+  }
+
+  .results .choice {
+        width: 110px;
+        height: 110px;
+        margin: 0;
+        order: 1; /* This ensures the choice appears above the text */
+    }
+
+    .results .icon {
+        width: 100px;
+        height: 100px;
+    }
 
   .result-container {
     order: 3;
+    text-align: center;
     margin-top: 2rem;
   }
 
-  .modal-content {
-    padding: 2rem;
+  .modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
     width: 100%;
-    max-width: 350px;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+
+  .modal-content {
+    background-color: transparent;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .modal-header {
-    margin-bottom: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 3rem;
   }
 
   .modal-header h2 {
+    color: var(--dark-text);
     font-size: 2rem;
   }
 
   .close-btn {
-    font-size: 2.5rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: var(--header-outline);
+  }
+
+  .rules-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: auto;
   }
 }
 </style>
