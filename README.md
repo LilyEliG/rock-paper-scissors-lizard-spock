@@ -34,12 +34,12 @@ Live Site URL:(https://fmrpslsgame.netlify.app/)
 ## My process
 Built with
 
-Semantic HTML5 markup
-CSS custom properties
-Flexbox
-CSS Grid
-Mobile-first workflow
-Vue.js - JS library
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- Vue.js - JS library
 
 ## What I learned
 This project was a great opportunity to deepen my understanding of Vue.js and responsive design. Some key learnings include:
